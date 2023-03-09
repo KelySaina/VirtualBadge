@@ -43,6 +43,34 @@
 
     }
 
+    if($action == 'verifUser'){
+        $matricule = $_POST['mat'];
+        $parcours = $_POST['par'];
+
+        $matricule = mysqli_real_escape_string($conn, $matricule);
+        $parcours = mysqli_real_escape_string($conn, $parcours);
+
+        $sql = "select matricule, nom, prenom, parcours from User where matricule = '$matricule' and parcours = '$parcours'";
+
+        if( $conn->query($sql) -> num_rows>0){
+            $row = $conn->query($sql)->fetch_assoc();
+            $result = array(
+                'status' => 'success',
+                'matricule' => $row['matricule'],
+                'nom' => $row['nom'],
+                'prenom' => $row['prenom'],
+                'parcours' => $row['parcours'],
+                'message' => 'Verified'
+            );
+        }else{
+            $result = array(
+                'status' => 'error',
+                'message' => 'User not registered'
+            );
+        }
+
+    }
+
     $conn->close();
     echo json_encode($result);
 
