@@ -32,6 +32,9 @@
                                   <li v-for="error in errors">{{ error }}</li>
                                 </ul>
                             </p>
+                            <p v-show="mErr" @click="mErr = false">
+                                {{m}}
+                            </p>
                         </div>
                         <form class="user">
                             <div class="form-group row">

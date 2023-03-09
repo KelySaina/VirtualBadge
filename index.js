@@ -8,6 +8,8 @@ var app = new Vue({
         prenom: null,
         parcours: null,
         complete: false,
+        m: null,
+        mErr: false,
     },
     methods:{
         checkForm: function (e) {
@@ -47,7 +49,6 @@ var app = new Vue({
                 axios.post('http://'+this.server+':1060/handle.php?action=regUser',f)
                 .then((response)=>{
                     if(response.data.status == 'success' ){
-                        console.log(response.data);
                         app.complete = true;
 
                         new QRCode(document.getElementById("qrcode"), {
@@ -59,6 +60,10 @@ var app = new Vue({
                             correctLevel : QRCode.CorrectLevel.H
                         })
                         
+                    }
+                    else{
+                        app.m = response.data.message
+                        app.mErr = true
                     }
                 })
 

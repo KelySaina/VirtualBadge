@@ -46,11 +46,11 @@ var scan = new Vue({
                 axios.post('http://'+this.server+':1060/handle.php?action=verifUser',f)
                 .then((response)=>{
                     if(response.data.status == 'success'){
-                        scan.mat = response.data.matricule
-                        scan.name = response.data.nom
-                        scan.surname = response.data.prenom
-                        scan.par = response.data.parcours
-                        scan.m = response.data.message
+                        scan.mat = " "+response.data.matricule
+                        scan.name = " "+response.data.nom
+                        scan.surname = " "+response.data.prenom
+                        scan.par = " "+response.data.parcours
+                        scan.m = " "+response.data.message
 
                         scan.complete = true
                     }

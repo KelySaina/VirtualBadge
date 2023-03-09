@@ -24,22 +24,35 @@
         $prenom = mysqli_real_escape_string($conn, $prenom);
         $parcours = mysqli_real_escape_string($conn, $parcours);
 
-        $sql = "INSERT INTO User (matricule, nom, prenom, parcours) VALUES ('$matricule', '$nom', '$prenom', '$parcours')";
+        $req = $conn->query("select matricule from User where matricule = '$matricule'");
 
-        if ($conn->query($sql) === TRUE) {
+        if($req->num_rows>0){
             $result = array(
-                "status" => "success",
-                "message" => "Registration Complete!",
-                "matricule" => $matricule,
-                "parcours" => $parcours
+                "status" => "error",
+                "message" => "Registration failed: User already registered with matricule $matricule"
             );
+        }else{
+
+            $sql = "INSERT INTO User (matricule, nom, prenom, parcours) VALUES ('$matricule', '$nom', '$prenom', '$parcours')";
+
+            if ($conn->query($sql) === TRUE) {
+                $result = array(
+                    "status" => "success",
+                    "message" => "Registration Complete!",
+                    "matricule" => $matricule,
+                    "parcours" => $parcours
+                );
+                
+            } else {
+                $result = array(
+                "status" => "error",
+                "message" => "Registration failed: " . $conn->error
+            );
+            }
             
-        } else {
-            $result = array(
-            "status" => "error",
-            "message" => "Registration failed: " . $conn->error
-        );
         }
+
+        
 
     }
 
