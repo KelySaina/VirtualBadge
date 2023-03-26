@@ -1,7 +1,7 @@
 var app = new Vue({
     el: "#app",
     data: {
-        server: '192.168.43.209',
+        server: 'localhost',
         errors: [],
         matricule:null,
         nom: null,
@@ -10,6 +10,7 @@ var app = new Vue({
         complete: false,
         m: null,
         mErr: false,
+        mm: null,
     },
     methods:{
         checkForm: function (e) {
@@ -49,6 +50,7 @@ var app = new Vue({
                 axios.post('http://'+this.server+':1060/handle.php?action=regUser',f)
                 .then((response)=>{
                     if(response.data.status == 'success' ){
+                        app.mm= response.data.matricule+"-"+response.data.parcours;
                         app.complete = true;
 
                         new QRCode(document.getElementById("qrcode"), {

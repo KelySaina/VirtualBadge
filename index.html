@@ -37,11 +37,11 @@
                             </p>
                         </div>
                         <form class="user">
-                            <div class="form-group row">
-                                <div class="col-sm-6 mb-3 mb-sm-0"><input class="form-control form-control-user" type="number" v-model="matricule" placeholder="Matricule" name="matricule" required min="0"></div>
-                                <div class="col-sm-6" style="margin-bottom: 16px;"><input class="form-control form-control-user" type="text" v-model="nom" placeholder="Nom" name="nom" required></div>
-                                <div class="col-sm-6" style="margin-bottom: 16px;"><input class="form-control form-control-user" type="text" v-model="prenom" placeholder="Prenom" name="prenom"></div>
-                                <div class="col-sm-6">
+                            <div class="form-group column">
+                                <div class="   mb-3 mb-sm-0"><input class="form-control form-control-user" type="number" v-model="matricule" placeholder="Matricule" name="matricule" required min="0"></div>
+                                <div class="  " style="margin-bottom: 16px;"><input class="form-control form-control-user" type="text" v-model="nom" placeholder="Nom" name="nom" required></div>
+                                <div class="  " style="margin-bottom: 16px;"><input class="form-control form-control-user" type="text" v-model="prenom" placeholder="Prenom" name="prenom"></div>
+                                <div class="  ">
                                     <label class="text-dark" for="parcours">Choisir le parcours:</label>
                                     <select class="form-control" v-model="parcours" name="parcours" required>
                                         <option selected disabled>Selectionner le parcours</option>
@@ -50,11 +50,11 @@
                                         <option value="SR">SR</option>
                                     </select>
                                 </div>
-                                <div class="col-sm-6" style="padding-top: 16px;">
+                                <div class="  " style="padding-top: 16px;">
                                     <button @click.prevent="sendLog()" class="btn btn-primary btn-block text-capitalize text-center text-white bg-success border-success btn-user"
                                     data-bs-hover-animate="pulse" type="submit" style="font-size: 17px;">Valider</button>
                                 </div>
-                                <div class="col-sm-6" style="padding-top: 16px; text-align: center;">
+                                <div class="  " style="padding-top: 16px; text-align: center;">
                                     <a style="text-decoration: none; color: blue; cursor: pointer;" href="./scanner.html">Verify member <br>&#10132;</a>
                                 </div>
                             </div>
@@ -88,7 +88,7 @@
             console.log(base64Image);
 
             pdf.addImage(base64Image, 'png', 2, 2, 40, 40);
-            pdf.save('QRCode.pdf');
+            pdf.save('QRCode-'+app.mm+'.pdf');
         }
     </script>
 </body>

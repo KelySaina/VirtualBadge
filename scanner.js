@@ -1,12 +1,15 @@
 var scan = new Vue({
     el: '#scan',
     data: {
-        server: '192.168.43.209',
+        server: 'localhost',
         errors: [],
         matricule:null,
         parcours: null,
         complete: false,
         incomplete: false,
+        warn: false,
+        reset: false,
+        alerte: false,
 
         mat: null,
         name: null,
@@ -54,13 +57,29 @@ var scan = new Vue({
 
                         scan.complete = true
                     }
+                    else if(response.data.status == 'warning'){
+                        scan.m = response.data.message
+                        scan.warn = true
+                    }
                     else{
                         scan.m = response.data.message
                         scan.incomplete = true
                     }
                 })
             }
-            
+        },
+        notIn(){
+            axios.post('http://'+this.server+':1060/handle.php?action=notIn')
+            .then((response)=>{
+                if(response.data.status == 's'){
+                    scan.m = response.data.message
+                    scan.reset = true
+                }
+                else{
+                    scan.m = response.data.message
+                    scan.incomplete = true
+                }
+            })   
         }
     }
 })

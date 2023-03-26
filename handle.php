@@ -33,7 +33,7 @@
             );
         }else{
 
-            $sql = "INSERT INTO User (matricule, nom, prenom, parcours) VALUES ('$matricule', '$nom', '$prenom', '$parcours')";
+            $sql = "INSERT INTO User (matricule, nom, prenom, parcours,avatar) VALUES ('$matricule', '$nom', '$prenom', '$parcours','not in')";
 
             if ($conn->query($sql) === TRUE) {
                 $result = array(
@@ -50,9 +50,7 @@
             );
             }
             
-        }
-
-        
+        }        
 
     }
 
@@ -63,25 +61,54 @@
         $matricule = mysqli_real_escape_string($conn, $matricule);
         $parcours = mysqli_real_escape_string($conn, $parcours);
 
-        $sql = "select matricule, nom, prenom, parcours from User where matricule = '$matricule' and parcours = '$parcours'";
-
-        if( $conn->query($sql) -> num_rows>0){
-            $row = $conn->query($sql)->fetch_assoc();
+        $chk = "select matricule from User where matricule='$matricule' and parcours='$parcours' and avatar='in'";
+        if($conn->query($chk)->num_rows>0){
             $result = array(
-                'status' => 'success',
-                'matricule' => $row['matricule'],
-                'nom' => $row['nom'],
-                'prenom' => $row['prenom'],
-                'parcours' => $row['parcours'],
-                'message' => 'Verified'
+                'status' => 'warning',
+                'message' => 'User already verified'
+            );
+        }else{
+            $sql = "select matricule, nom, prenom, parcours from User where matricule = '$matricule' and parcours = '$parcours'";
+
+            if( $conn->query($sql) -> num_rows>0){
+                $row = $conn->query($sql)->fetch_assoc();
+                if($row['prenom'] == 'null'){
+                    $row['prenom'] = "";
+                }
+                $result = array(
+                    'status' => 'success',
+                    'matricule' => $row['matricule'],
+                    'nom' => $row['nom'],
+                    'prenom' => $row['prenom'],
+                    'parcours' => $row['parcours'],
+                    'message' => 'Verified'
+                );
+                $conn->query("update User set avatar='in' where matricule='$matricule' and parcours='$parcours'");
+            }else{
+                $result = array(
+                    'status' => 'error',
+                    'message' => 'User not registered'
+                );
+            }
+    
+        }
+
+        
+    }
+
+    if($action == 'notIn'){
+        $res = $conn->query("update User set avatar='not in'");
+        if($res){
+            $result = array(
+                'status' => 's',
+                'message' => 'Presence reset succeeded'
             );
         }else{
             $result = array(
                 'status' => 'error',
-                'message' => 'User not registered'
+                'message' => 'Presence reset failed'
             );
         }
-
     }
 
     $conn->close();

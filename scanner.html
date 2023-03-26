@@ -25,43 +25,81 @@
                         </div>
                         <div style="color: red; margin: auto; width: 70%; text-align: center;">
                             <p v-if="errors.length">
-                                <b>Please correct the following error(s):</b>
+                                <b>Veuillez verifier les erreurs suivantes:</b>
                                 <ul>
                                   <li v-for="error in errors">{{ error }}</li>
                                 </ul>
                             </p>
                         </div>
-                        <form class="user">
-                            <div class="form-group row">
-                                <div class="col-sm-6 mb-3 mb-sm-0"><input class="form-control form-control-user" type="number" v-model="matricule" placeholder="Matricule" name="matricule" required min="0"></div>
-                                <div class="col-sm-6">
-                                    <label class="text-dark" for="parcours">Parcours:</label>
-                                    <select class="form-control" v-model="parcours" name="parcours" required>
+                        <form class="user" >
+                            <p style="text-align: center; color: black; font-size: bolder; font-size: 17px;">
+                                Scanner le code QR et entrer les informations ci-dessous
+                            </p>
+                            <div class="form-group column">
+                                <div class="  mb-3 mb-sm-0"><input class="form-control form-control-user" type="number" v-model="matricule" placeholder="Matricule" name="matricule" min="0"></div>
+                                <div class=" ">
+                                    <label class="text-dark" for="parcours">Selectionner le parcours:</label>
+                                    <select class="form-control" v-model="parcours" name="parcours">
                                         <option selected disabled>Selectionner le parcours</option>
                                         <option value="IG">IG</option>
                                         <option value="GB">GB</option>
                                         <option value="SR">SR</option>
                                     </select>
                                 </div>
-                                <div class="col-sm-6" style="padding-top: 16px;">
+                                <div class=" " style="padding-top: 16px;">
                                     <button @click.prevent="showLog()" class="btn btn-primary btn-block text-capitalize text-center text-white bg-success border-success btn-user"
                                     data-bs-hover-animate="pulse" type="submit" style="font-size: 17px;">Valider</button>
                                 </div>
-                            </div>
+                                <div class=" " style="padding-top: 16px; text-align: center;">
+                                    <a style="text-decoration: none; color: red; cursor: pointer;" href="#" @click="alerte=true;">Remettre a zero</a>
+                                    <p>
+                                        (Ne remettre a zero qu'a la fin du cours)
+                                    </p>
+                                </div>
+                            </div>    
                         </form>
+                        <div v-show="alerte" id="c" style="text-align: center; background-color: white; position: absolute; z-index: 10; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 80%; box-shadow: 0 0 20px tomato; border-radius: 25px;padding: 20px;">
+                                    
+                            <p style="text-align: center; font-size: bold;">Toutes personnes deja scannees seront marques non-scannees  <br>Continuer?</p>
+                            <p style="display: flex; justify-content: space-around;">
+                                <button  @click="alerte = false"  class="btn btn-primary text-capitalize text-center text-white">Non</button>
+                                <button @click="notIn();alerte = false" class="btn btn-secondary text-center text-white bg-danger border-danger">Oui</button>
+                            </p>
+                          </div>
+                        </div>
+
+                        <div v-show="reset" id="c" style="text-align: center; background-color: white; position: absolute; z-index: 10; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 80%; box-shadow: 0 0 20px yellowgreen; border-radius: 25px;">
+                            <p><img width="100px" height="100px" src="./assets/img/check.png" alt="" srcset=""></p>
+                            <p style="color: lime;">{{m}}</p>
+                            <p>
+                              <button onclick="location.reload();" @click="reset = false" class="btn btn-primary text-capitalize text-center text-white bg-success border-success">Ok</button>
+                          </p>
+                        </div>
                         <div v-show="complete" id="c" style="text-align: center; background-color: white; position: absolute; z-index: 10; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 80%; box-shadow: 0 0 20px yellowgreen; border-radius: 25px;">
                             <p><img width="100px" height="100px" src="./assets/img/check.png" alt="" srcset=""></p>
                             <p style="color: lime;">{{m}}</p>
                             <p>
                               <div style="display: flex; flex-direction: column;">
-                                <p><b>Matricule <br></b>{{mat}}</p>
-                                <p><b>Nom complet <br></b>{{name}} {{surname}}</p>
-                                <p><b>Parcours <br></b>{{par}}</p>
+                                <p><b><u>Matricule</u> <br></b>{{mat}}</p>
+                                <p><b> <u>Nom complet</u> <br> </b>{{name}} {{surname}}</p>
+                                <p><b><u>Parcours</u>  <br></b>{{par}}</p>
                               </div>
                             </p>
                             <p>
                               <button onclick="location.reload();" @click="complete = false" class="btn btn-primary text-capitalize text-center text-white bg-success border-success">Ok</button>
                           </p>
+                        </div>
+                        <div v-show="warn" id="c" style="text-align: center; background-color: white; position: absolute; z-index: 10; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 80%; box-shadow: 0 0 20px yellow; border-radius: 25px;">
+                            <p><img width="100px" height="100px" src="./assets/img/warn.png" alt="" srcset=""></p>
+                            <p style="color: rgb(240, 224, 11);">{{m}}</p>
+                            <p>
+                              <div>
+                                
+                              </div>
+                            </p>
+                            <p>
+                              <button onclick="location.reload();" @click="warn = false" class="btn btn-primary text-capitalize text-center text-white bg-success border-success">Ok</button>
+                            </p>
                         </div>
                         <div v-show="incomplete" id="c" style="text-align: center; background-color: white; position: absolute; z-index: 10; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 80%; box-shadow: 0 0 20px tomato; border-radius: 25px;">
                           <p><img width="100px" height="100px" src="./assets/img/err.png" alt="" srcset=""></p>
@@ -73,8 +111,8 @@
                           </p>
                           <p>
                             <button onclick="location.reload();" @click="incomplete = false" class="btn btn-primary text-capitalize text-center text-white bg-success border-success">Ok</button>
-                        </p>
-                      </div>
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
