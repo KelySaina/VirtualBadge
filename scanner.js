@@ -1,7 +1,8 @@
 var scan = new Vue({
     el: '#scan',
     data: {
-        server: 'localhost',
+        //server: 'virtualbadge',
+        //port: '3333',
         errors: [],
         matricule:null,
         parcours: null,
@@ -46,7 +47,7 @@ var scan = new Vue({
                     par : scan.parcours
                 }
                 var f = this.toFormData(d);
-                axios.post('http://'+this.server+':1060/handle.php?action=verifUser',f)
+                axios.post('http://virtualbadge:3333/handle.php?action=verifUser',f)
                 .then((response)=>{
                     if(response.data.status == 'success'){
                         scan.mat = " "+response.data.matricule
@@ -69,8 +70,9 @@ var scan = new Vue({
             }
         },
         notIn(){
-            axios.post('http://'+this.server+':1060/handle.php?action=notIn')
+            axios.post('http://virtualbadge:3333/handle.php?action=notIn')
             .then((response)=>{
+                
                 if(response.data.status == 's'){
                     scan.m = response.data.message
                     scan.reset = true
@@ -79,7 +81,7 @@ var scan = new Vue({
                     scan.m = response.data.message
                     scan.incomplete = true
                 }
-            })   
+            }) 
         }
     }
 })

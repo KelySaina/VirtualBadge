@@ -1,7 +1,8 @@
 var app = new Vue({
     el: "#app",
     data: {
-        server: 'localhost',
+        //server: 'virtualbadge',
+        //port: '3333',
         errors: [],
         matricule:null,
         nom: null,
@@ -47,7 +48,7 @@ var app = new Vue({
                 }
                 var f = this.toFormData(o)
 
-                axios.post('http://'+this.server+':1060/handle.php?action=regUser',f)
+                axios.post('http://virtualbadge:3333/handle.php?action=regUser',f)
                 .then((response)=>{
                     if(response.data.status == 'success' ){
                         app.mm= response.data.matricule+"-"+response.data.parcours;
