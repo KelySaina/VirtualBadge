@@ -61,7 +61,12 @@
                         </form>
                         <div v-show="complete" id="c" style="text-align: center; background-color: white; position: absolute; z-index: 10; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 80%; box-shadow: 0 0 20px yellowgreen; border-radius: 25px;">
                             <p><img width="100px" height="100px" src="./assets/img/check.png" alt="" srcset=""></p>
+                            <p>Conserver le code QR suivant. Il sera scanne pour vos prochaines sceances</p>
                             <p id="qrcode" style="padding: 10px; display: flex; justify-content: center; align-items: center;"></p>
+                            <p>
+                                <span style="font-size: 17px; color: rgb(21, 21, 173); font-weight: bolder;">C3LF</span> <br>
+                                <span style="font-size: 15px; color: rgb(21, 21, 173); font-weight: bold;">C</span>lub <span style="font-size: 15px; color: rgb(21, 21, 173); font-weight: bold;">L</span>inux et <span style="font-size: 15px; color: rgb(21, 21, 173); font-weight: bold;">L</span>ogiciel <span style="font-size: 15px; color: rgb(21, 21, 173); font-weight: bold;">L</span>ibre de <span style="font-size: 15px; color: rgb(21, 21, 173); font-weight: bold;">F</span>ianarantsoa
+                            </p>
                             <p>
                                 <button onclick="download(); location.reload();" @click="complete = false" class="btn btn-secondary text-capitalize text-center text-white bg-info border-info">Download</button>
                             </p>
