@@ -17,12 +17,22 @@
                         <div class="flex-grow-1 bg-register-image" style="background-image: url(&quot;assets/img/download.png&quot;);background-size: contain;background-repeat: no-repeat;"></div>
                     </div>
                     <div class="col-lg-7">
-                        <div class="p-5"><img class="rounded-circle img-fluid border border-dark d-flex justify-content-center align-items-center swing animated" style="margin: auto;background-image: url(&quot;assets/img/c3lf.jpg&quot;);width: 80px;" src="assets/img/c3lf.jpg">
-                            <div
-                                class="text-center">
-                                <h4 class="text-dark mb-4">C3LF Member Verification</h4>
-                                <h4 class="text-dark mb-4"></h4>
+                        <div style="display: flex; align-items: center; justify-content: space-evenly;">
+                            <p style="font-size: 15px; font-weight: bolder; display: flex; text-align: center; align-items: center; justify-content: center; flex-direction: column; color: white; background-color: lightgreen; width: 80px; height: 110px; border-radius: 10%;">
+                                Presents <br><span style="font-size: 25px;">{{pres}}</span>
+                            </p>
+                            <div class="p-5"><img class="rounded-circle img-fluid border border-dark d-flex justify-content-center align-items-center swing animated" style="margin: auto;background-image: url(&quot;assets/img/c3lf.jpg&quot;);width: 80px;" src="assets/img/c3lf.jpg">
+                                <div
+                                    class="text-center">
+                                    <h4 class="text-dark mb-4">C3LF Member Verification</h4>
+                                    <h4 class="text-dark mb-4"></h4>
+                                </div>
+                            </div>
+                            <p style="font-size: 15px; font-weight: bolder; display: flex; text-align: center; align-items: center; justify-content: center; flex-direction: column; color: white; background-color: lightblue; width: 80px; height: 110px; border-radius: 10%;">
+                                Total <br><span style="font-size: 25px;">{{tot}}</span>
+                            </p>
                         </div>
+                        
                         <div style="color: red; margin: auto; width: 70%; text-align: center;">
                             <p v-if="errors.length">
                                 <b>Veuillez verifier les erreurs suivantes:</b>

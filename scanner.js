@@ -1,7 +1,7 @@
 var scan = new Vue({
     el: '#scan',
     data: {
-        //server: 'virtualbadge',
+        server: '192.168.43.209',
         //port: '3333',
         errors: [],
         matricule:null,
@@ -16,7 +16,13 @@ var scan = new Vue({
         name: null,
         surname: null,
         par: null,
-        m: null
+        m: null,
+        pres: '0',
+        tot: null
+    },
+    mounted(){
+        this.getTot();
+        this.getScan();
     },
     methods:{
         checkForm: function (e) {
@@ -40,6 +46,22 @@ var scan = new Vue({
             }
             return fd;
         },
+        getTot(){
+            axios.post('http://'+this.server+':3333/handle.php?action=getTot')
+            .then((response)=>{
+                if(response.data.status == 's'){
+                    scan.tot = response.data.tot
+                }
+            })
+        },
+        getScan(){
+            axios.post('http://'+this.server+':3333/handle.php?action=getScan')
+            .then((response)=>{
+                if(response.data.status == 's'){
+                    scan.pres = response.data.pres
+                }
+            })
+        },
         showLog(){
             if(this.checkForm()){
                 var d = {
@@ -47,7 +69,7 @@ var scan = new Vue({
                     par : scan.parcours
                 }
                 var f = this.toFormData(d);
-                axios.post('http://virtualbadge:3333/handle.php?action=verifUser',f)
+                axios.post('http://'+this.server+':3333/handle.php?action=verifUser',f)
                 .then((response)=>{
                     if(response.data.status == 'success'){
                         scan.mat = " "+response.data.matricule
@@ -70,9 +92,8 @@ var scan = new Vue({
             }
         },
         notIn(){
-            axios.post('http://virtualbadge:3333/handle.php?action=notIn')
+            axios.post('http://'+this.server+':3333/handle.php?action=notIn')
             .then((response)=>{
-                
                 if(response.data.status == 's'){
                     scan.m = response.data.message
                     scan.reset = true

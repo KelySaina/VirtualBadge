@@ -33,7 +33,7 @@
             );
         }else{
 
-            $sql = "INSERT INTO User (matricule, nom, prenom, parcours,avatar) VALUES ('$matricule', '$nom', '$prenom', '$parcours','not in')";
+            $sql = "INSERT INTO User (matricule, nom, prenom, parcours,avatar) VALUES ('$matricule', '$nom', '$prenom', '$parcours','in')";
 
             if ($conn->query($sql) === TRUE) {
                 $result = array(
@@ -107,6 +107,38 @@
             $result = array(
                 'status' => 'error',
                 'message' => 'Presence reset failed'
+            );
+        }
+    }
+
+    if($action == 'getTot'){
+        $res = $conn->query("select count(*) as tot from User");
+        if($res->num_rows>0){
+            $r = $res->fetch_assoc();
+            $result = array(
+                'status' => 's',
+                'tot' => $r['tot']
+            );
+        }else{
+            $result = array(
+                'status' => 'error',
+                'tot' => 0
+            );
+        }
+    }
+
+    if($action == 'getScan'){
+        $res = $conn->query("select count(*) as tot from User where avatar='in'");
+        if($res->num_rows>0){
+            $r = $res->fetch_assoc();
+            $result = array(
+                'status' => 's',
+                'pres' => $r['tot']
+            );
+        }else{
+            $result = array(
+                'status' => 'error',
+                'tot' => 0
             );
         }
     }
